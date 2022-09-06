@@ -2,6 +2,7 @@
   <div class="fixed top-16 w-full max-w-sm px-4">
     <Popover v-slot="{ open }" class="relative">
       <PopoverButton
+        id="popoverButton"
         ref="buttonRef"
         :class="open ? '' : 'text-opacity-90'"
         class="
@@ -141,6 +142,7 @@
         </PopoverPanel>
       </div>
     </Popover>
+    <button @click="openPopover()">OUVRIR</button>
   </div>
 </template>
 
@@ -149,29 +151,17 @@ import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue';
 import { ChevronDownIcon } from '@heroicons/vue/solid';
 import { ref, onMounted, watch } from 'vue';
 
-const test = ref('nul');
-
 const buttonRef = ref(null);
 
-onMounted(() => {
-  console.log('mounted');
-  if (buttonRef) {
-    openPopover();
-  }
-});
-
-watch(buttonRef, (newValue, oldValue) => {
-  console.log({ newValue, oldValue });
-  if (newValue !== null) {
-    console.log('watch', newValue);
-    openPopover();
-  }
-});
-
 function openPopover() {
-  let el = buttonRef.value.$el;
-  console.log('open', buttonRef.value.$el);
-  el.click();
+  let el = buttonRef.value.el;
+  console.log('open', el);
+  if (el) {
+    el.click();
+  } else {
+    const button = document.getElementById('headlessui-popover-button-1');
+    button.click();
+  }
 }
 
 const solutions = [
@@ -262,4 +252,11 @@ const solutions = [
     `,
   },
 ];
+
+onMounted(() => {
+  console.log('mounted');
+  if (buttonRef.value) {
+    openPopover();
+  }
+});
 </script>
