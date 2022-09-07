@@ -21,6 +21,7 @@
           focus-visible:ring-2
           focus-visible:ring-white
           focus-visible:ring-opacity-75
+          popoverButton
         "
       >
         <span>Solutions</span>
@@ -142,7 +143,6 @@
         </PopoverPanel>
       </div>
     </Popover>
-    <button @click="openPopover()">OUVRIR</button>
   </div>
 </template>
 
@@ -151,15 +151,17 @@ import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue';
 import { ChevronDownIcon } from '@heroicons/vue/solid';
 import { ref, onMounted, watch } from 'vue';
 
+const POPOVER_BUTTON_CLASS = 'popoverButton';
+
 const buttonRef = ref(null);
 
 function openPopover() {
   let el = buttonRef.value.el;
-  console.log('open', el);
   if (el) {
+    console.log('première condition', buttonRef.value);
     el.click();
   } else {
-    const button = document.getElementById('headlessui-popover-button-1');
+    const button = document.getElementsByClassName(POPOVER_BUTTON_CLASS)[0];
     button.click();
   }
 }
